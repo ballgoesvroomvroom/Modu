@@ -29,6 +29,7 @@ A list of scopes needed:
 Create a `.env` file into the working directory and have the two variables.
 	- `DB_ACCESS_TOKEN`; your own personal access token from the newly created app
 	- `BIN_PATH`; directory to store downloaded content temporarily
+	- `OUTPUT_FILE`; optional, directory to write the shareable link in
 
 Run `main.py` and answer/do as prompted by the terminal.<br />
 The shareable link is stored in `OUTPUT.txt`
@@ -43,6 +44,10 @@ Hit `Generate` and that is your own personal access token.
 Just your bin's directory, relative to the current working directory where you ran `main.py`.<br />
 The downloaded contents are stored temporarily here, such as `.mp4` directly from YouTube and then `.mp3` when converted to `.mp3`.<br />
 The contents are removed from that directory after successful uploads to Dropbox
+
+### `OUTPUT_FILE`
+The path to a text file where the output (the shareable link) will be written in.<br />
+If non-existent, it would not write the output into any file, just the terminal/console.
 
 ### Example of the said `.env` file
 ```

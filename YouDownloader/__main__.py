@@ -14,6 +14,11 @@ try:
 except:
 	print("Missing BIN_PATH in .env file")
 	raise Exception
+output_file = None
+try:
+	output_file = os.getenv("OUTPUT_PATH")
+except:
+	print("Continuing without an output file; to add one, assign the path of the output file to the variable 'OUTPUT_PATH' in an .env file")
 
 if __name__ == "__main__":
 	print("Running..")
@@ -81,7 +86,9 @@ if __name__ == "__main__":
 			except:
 				pass
 			print(link + endStr)
-			print("Full link is in OUTPUT.txt\n")
-			with open("OUTPUT.txt", "w", encoding = "utf-8") as f:
-			    f.write(videoTitle + " - " + videoAuthor + ":\n" + link + "\n\n")
+
+			if output_file != None:
+				print("Full link is in {}\n".format(output_file))
+				with open(output_file, "w", encoding = "utf-8") as f:
+				    f.write(videoTitle + " - " + videoAuthor + ":\n" + link + "\n\n")
 		os.remove(path)

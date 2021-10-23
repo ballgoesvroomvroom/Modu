@@ -1,6 +1,6 @@
 # ScheduleGen
 Ever need to effectively split your working hours into sections to divide your time and attention amongst multiple stuff?<br />
-This module generates a schedule between the given range of timings with hihgly customisable options.<br />
+This module generates a schedule between the given range of timings with highly customisable options.<br />
 Key in the different periods of time and give each its name, the frequency of occurrence, the bottom and upper limit of the duration of each period.<br />
 It also accepts pre-defined periods with custom timings, from now on referenced as SetInPlace periods.
 
@@ -38,6 +38,7 @@ schedule.write_json("output.json")
 print(schedule)
 ```
 ### Output:
+String representation:
 ```
  10:00 - 22:00       Seed: 0.619
  10:00 | Code            | 47min
@@ -75,7 +76,8 @@ print(schedule)
  20:32 | Game            | 1hr 17min
 -------|-----------------|----------
 ```
-`.json` data saved using `write_json` method [here](https://github.com/ballgoesvroomvroom/Modu/blob/main/ScheduleGen/sample_output.json).
+`.json` data saved using `write_json` method:
+[here](https://github.com/ballgoesvroomvroom/Modu/blob/main/ScheduleGen/sample_output.json).
 
 ## API:
 ### ParamObject [Class]
