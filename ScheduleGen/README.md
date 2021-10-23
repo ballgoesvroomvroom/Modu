@@ -15,89 +15,6 @@ If the `.Seed` property of the ParamObject is `-1` it will get a random seed bet
 <br />
 The frequency value is the ratio of the time it will get when shared amongst the rest under `.Period` property. It takes the remaining time there is after accounting for SetInPlace periods, and divide them equally, giving each period the right amount of share. So if `PeriodA` has a frequency of 2 and `PeriodB` has a frequeny of 1, the total duration of PeriodA will be around 2 times more than PeriodB. Of course the number it is greater by may sometimes not be the exact same (sometimes 1.95 in this case, depending of the SetInPlace periods) but it will be close enough to be not noticeable. Lastly, frequency can be a fraction, i.e `0.5`
 
-## API:
-### ParamObject [Class]
-
-#### Properties:
-
-- `.Seed`
-    - Default: `-1`.
-    - The seed for random generation, put in the same seed and same parameters, you will get back the same schedule.
-    - A value of `-1` will let the seed be random.
-- `.Start`
-    - Default: `"08:00"`.
-    - The start time for the schedule.
-- `.End`
-    - Default: `"18:00"`.
-	- The end time for the schedule.
-- `.Periods`
-    - Default: `{"ProjectA": [1, 50, 50], "ProjectB": [2, 25, 25]}`.
-    - Schematic: `"PeriodName": [Frequency, BottomTimeLimit, UpperTimeLimit]`.
-    - Store the data for each period to be added.
-    - Works exclusively of `.SetInPlace`.
-        - Even if `.SetInPlace` contains a period with the same name, it will exclude it when calculating the total period time.
-#### Description:
-Stores parameters for generation.<br />
-Used by [Schedule]().
-#### Construction:
-Parameters: None
-
-#### Methods:
-- `AddPeriod`<br />
-Adds a period into `.Periods`.
-  - Parameters:
-    - PeriodName: str | Default: None
-	- Frequency: int/float | Default: None
-	- BottomTimeLimit: int | Default: None
-	- UpperTimeLimit: int | Default: None
-- `RemovePeriod`
-Remove the period from `.Periods`.
-  - Parameters:
-    - PeriodName: str | Default: None
-- `AddSetInPlace`
-Adds a period to `.SetInPlace`
-  - Parameters:
-    - PeriodName: str | Default: None
-    - Start_timing: str | Default: None
-    - End_timing: str | Default: None
-- `RemoveSetInPlace`
-Removes a period in `.SetInPlace`
-  - Parameters:
-    - PeriodName: str | Default: None
-- `Purge`
-Removes all instances of the period, within both `.Periods` and `.SetInPlace`
-  - Parameters:
-    - PeriodName: str | Default: None
-- `Clean`
-Removes all periods
-  - Parameters: None
-
-
-### Schedule [Class]
-#### Properties:
-- `.seed`
-    - Stores the seed used to generate the schedule.
-- `.period`
-    - Stores the periods.
-    - Used for read and writing into files.
-#### Description:
-Main class of this module.<br />
-Used to generate the schedule.
-#### Construction:
-Parameters:
-  - [ParamObject]()
-
-#### Methods:
-- `write_json`
-Writes the schedule's content into a `.json` file.
-  - Parameters:
-    - Filename: str | Default: None | `.json` file to write the contents to
-- `write`
-Writes the string representation of the object into a `.txt` file.
-  - Parameters:
-    - Filename: str | Default: None | `.txt` file to write the contents to
-
-
 ## Code sample:
 ```py
 import ScheduleGen
@@ -158,3 +75,85 @@ print(schedule)
  20:32 | Game            | 1hr 17min
 -------|-----------------|----------
 ```
+
+## API:
+### ParamObject [Class]
+
+#### Properties:
+
+- `.Seed`
+    - Default: `-1`.
+    - The seed for random generation, put in the same seed and same parameters, you will get back the same schedule.
+    - A value of `-1` will let the seed be random.
+- `.Start`
+    - Default: `"08:00"`.
+    - The start time for the schedule.
+- `.End`
+    - Default: `"18:00"`.
+	- The end time for the schedule.
+- `.Periods`
+    - Default: `{"ProjectA": [1, 50, 50], "ProjectB": [2, 25, 25]}`.
+    - Schematic: `"PeriodName": [Frequency, BottomTimeLimit, UpperTimeLimit]`.
+    - Store the data for each period to be added.
+    - Works exclusively of `.SetInPlace`.
+        - Even if `.SetInPlace` contains a period with the same name, it will exclude it when calculating the total period time.
+#### Description:
+Stores parameters for generation.<br />
+Used by [Schedule]().
+#### Construction:
+Parameters: None
+
+#### Methods:
+- `AddPeriod`<br />
+  - Adds a period into `.Periods`.
+  - Parameters:
+    - PeriodName: str | Default: None
+	- Frequency: int/float | Default: None
+	- BottomTimeLimit: int | Default: None
+	- UpperTimeLimit: int | Default: None
+- `RemovePeriod`
+  - Remove the period from `.Periods`.
+  - Parameters:
+    - PeriodName: str | Default: None
+- `AddSetInPlace`
+  - Adds a period to `.SetInPlace`
+  - Parameters:
+    - PeriodName: str | Default: None
+    - Start_timing: str | Default: None
+    - End_timing: str | Default: None
+- `RemoveSetInPlace`
+  - Removes a period in `.SetInPlace`
+  - Parameters:
+    - PeriodName: str | Default: None
+- `Purge`
+  - Removes all instances of the period, within both `.Periods` and `.SetInPlace`
+  - Parameters:
+    - PeriodName: str | Default: None
+- `Clean`
+  - Removes all periods
+  - Parameters: None
+
+
+### Schedule [Class]
+#### Properties:
+- `.seed`
+    - Stores the seed used to generate the schedule.
+- `.period`
+    - Stores the periods.
+    - Used for read and writing into files.
+#### Description:
+Main class of this module.<br />
+Used to generate the schedule.
+#### Construction:
+Parameters:
+  - [ParamObject](https://github.com/ballgoesvroomvroom/Modu/tree/main/ScheduleGen#paramobject-class)
+
+#### Methods:
+- `write_json`
+  - Writes the schedule's content into a `.json` file.
+  - Parameters:
+    - Filename: str | Default: None | `.json` file to write the contents to
+- `write`
+  - Writes the string representation of the object into a `.txt` file.
+  - Parameters:
+    - Filename: str | Default: None | `.txt` file to write the contents to
