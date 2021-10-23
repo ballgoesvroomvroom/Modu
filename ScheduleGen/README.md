@@ -39,6 +39,9 @@ The frequency value is the ratio of the time it will get when shared amongst the
 #### Description:
 Stores parameters for generation.<br />
 Used by [Schedule]().
+#### Construction:
+Parameters: None
+
 #### Methods:
 - `AddPeriod`<br />
 Adds a period into `.Periods`.
@@ -48,20 +51,110 @@ Adds a period into `.Periods`.
 	- BottomTimeLimit: int | Default: None
 	- UpperTimeLimit: int | Default: None
 - `RemovePeriod`
-
-
+Remove the period from `.Periods`.
+  - Parameters:
+    - PeriodName: str | Default: None
+- `AddSetInPlace`
+Adds a period to `.SetInPlace`
+  - Parameters:
+    - PeriodName: str | Default: None
+    - Start_timing: str | Default: None
+    - End_timing: str | Default: None
+- `RemoveSetInPlace`
+Removes a period in `.SetInPlace`
+  - Parameters:
+    - PeriodName: str | Default: None
+- `Purge`
+Removes all instances of the period, within both `.Periods` and `.SetInPlace`
+  - Parameters:
+    - PeriodName: str | Default: None
+- `Clean`
+Removes all periods
+  - Parameters: None
 
 
 ### Schedule [Class]
-#### Properties
-	- `.seed`
-		- Stores the seed used to generate the schedule.
-	- `.period`
+#### Properties:
+- `.seed`
+    - Stores the seed used to generate the schedule.
+- `.period`
+    - Stores the periods.
+    - Used for read and writing into files.
+#### Description:
+Main class of this module.<br />
+Used to generate the schedule.
+#### Construction:
+Parameters:
+  - [ParamObject]()
 
+#### Methods:
+- `write_json`
+Writes the schedule's content into a `.json` file.
+  - Parameters:
+    - Filename: str | Default: None | `.json` file to write the contents to
+- `write`
+Writes the string representation of the object into a `.txt` file.
+  - Parameters:
+    - Filename: str | Default: None | `.txt` file to write the contents to
 
 
 ## Code sample:
 ```py
-import ScheduleGenerator
+import ScheduleGen
 
+paramobj = ScheduleGen.ParamObject()
+paramobj.Clean()
+
+paramobj.Start = "10:00"
+paramobj.End = "22:00"
+
+paramobj.AddPeriod("Game", 2, 20, 60)
+paramobj.AddPeriod("Code", 3, 40, 60)
+paramobj.AddPeriod("Touch grass", 0.1, 2, 10)
+
+paramobj.AddSetInPlace("Lunch", "13:00", "14:00")
+paramobj.AddSetInPlace("Dinner", "17:30", "19:00")
+
+schedule = ScheduleGen.Schedule(paramobj)
+schedule.rwrite("output.txt")
+schedule.write_json("output.json")
+print(schedule)
+```
+### Output:
+```
+ 10:00 - 22:00       Seed: 0.619
+ 10:00 | Code            | 47min
+-------|-----------------|------
+ 10:47 | Touch grass     | 3min
+-------|-----------------|-----
+ 10:50 | Game            | 24min
+-------|-----------------|------
+ 11:14 | Code            | 40min
+-------|-----------------|------
+ 11:54 | Game            | 21min
+-------|-----------------|------
+ 12:15 | Code            | 45min
+-------|-----------------|------
+ 13:00 | Lunch           | 1hr
+-------|-----------------|----
+ 14:00 | Game            | 26min
+-------|-----------------|------
+ 14:26 | Code            | 1hr 40min
+-------|-----------------|----------
+ 16:06 | Touch grass     | 5min
+-------|-----------------|-----
+ 16:11 | Game            | 36min
+-------|-----------------|------
+ 16:47 | Touch grass     | 4min
+-------|-----------------|-----
+ 16:51 | Code            | 39min
+-------|-----------------|------
+ 17:30 | Dinner          | 1hr 30min
+-------|-----------------|----------
+ 19:00 | Game            | 27min
+-------|-----------------|------
+ 19:27 | Code            | 1hr 5min
+-------|-----------------|---------
+ 20:32 | Game            | 1hr 17min
+-------|-----------------|----------
 ```

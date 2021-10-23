@@ -44,20 +44,20 @@ class ParamObject():
 		self.Periods = {"ProjectA": [1, 50, 50], "ProjectB": [2, 25, 25]}
 		self.SetInPlace = {"ProjectC's meeting": ["10:00", "11:00", "14:00", "15:00"]}
 
-	def AddPeriod(name, frequency, bottomtimelimit, uppertimelimit):
+	def AddPeriod(self, name, frequency, bottomtimelimit, uppertimelimit):
 		"""
 		Adds the period to self.Periods
 		"""
 		self.Periods[name] = [frequency, bottomtimelimit, uppertimelimit]
 
-	def RemovePeriod(name):
+	def RemovePeriod(self, name):
 		"""
 		Removes the period in self.Periods
 		"""
 		if name in self.Periods:
 			del self.Periods[name]
 
-	def AddSetInPlace(name, start_timing, end_timing):
+	def AddSetInPlace(self, name, start_timing, end_timing):
 		"""
 		Adds a period to self.SetInPlace
 		"""
@@ -67,19 +67,26 @@ class ParamObject():
 		else:
 			self.SetInPlace[name] = [start_timing, end_timing]
 
-	def RemoveSetInPlace(name):
+	def RemoveSetInPlace(self, name):
 		"""
 		Removes a period in self.SetInPlace
 		"""
 		if name in self.SetInPlace:
 			del self.SetInPlace[name]
 
-	def Purge(periodName):
+	def Purge(self, periodName):
 		"""
 		Removes all instances of the period
 		"""
 		if periodName in self.Periods: del self.Periods[periodName]
 		if periodName in self.SetInPlace: del self.SetInPlace[periodName]
+
+	def Clean(self):
+		"""
+		Removes all periods
+		"""
+		self.Periods = {}
+		self.SetInPlace = {}
 
 class Schedule():
 	def __init__(self, params):
