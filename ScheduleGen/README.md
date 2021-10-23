@@ -75,6 +75,7 @@ print(schedule)
  20:32 | Game            | 1hr 17min
 -------|-----------------|----------
 ```
+`.json` data saved using `write_json` method [here](https://github.com/ballgoesvroomvroom/Modu/blob/main/ScheduleGen/sample_output.json).
 
 ## API:
 ### ParamObject [Class]
