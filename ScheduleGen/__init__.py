@@ -131,6 +131,7 @@ class Schedule():
 					raise GenerationError("SetInPlace for period: %s, does not contain a valid start and end group, with start > end"%(setted_per))
 				remaining_dur -= (end -start)
 				self.periods.append([setted_per, start, end, end -start])
+		self.write_json("output.json")
 		self.__sort() ## sort self.periods in order and check for overlapping of periods
 
 		if len(self.periods) >= 1:
@@ -183,6 +184,7 @@ class Schedule():
 					occupied = True
 					break
 				occupied_index += 1
+			print(curr_timepointer, occupied, curr_period, curr_period_len, push)
 			if (occupied and curr_period != None) or push:
 				## push current period instance into self.periods
 				start = curr_timepointer -curr_period_len
@@ -192,7 +194,8 @@ class Schedule():
 					curr_timepointer = self.periods[occupied_index][2] +1 ## skip to the end of the occupied period slot
 				elif push:
 					## just a simple push, no occupancy was detected, no need to jump to end of period
-					curr_timepointer += 1
+					## curr_timepointer += 1
+					pass
 
 				if push:
 					## need to find position of the current period
@@ -210,6 +213,7 @@ class Schedule():
 				time_per_period[curr_period] -= (end -start)
 
 				## reset to default values
+				curr_timepointer -= 1
 				curr_period = None
 				curr_period_len = 0
 				push = False
@@ -245,12 +249,14 @@ class Schedule():
 					raise GenerationError("INTERNAL ERROR")
 
 				curr_period = random_period
-				curr_period_len = 1
+				curr_period_len = 0
 
 				# curr_timepointer += 1 ## no need to increase, increase it only at the next iteration since we're assigning data to this curr_timepointer
 		self.__sort() ## redundant as it should have been sorted
 		self.__merge()
 		self.__convert()
+		self.write_json("output.json")
+		print(time_per_period)
 
 	def __repr__(self):
 		start_time = self.GetElapsedTimeSinceStartFromMinutes(self.start)
@@ -335,6 +341,7 @@ class Schedule():
 			if x > 0:
 				## check if periods overlap
 				prev = p[x -1]
+				print(prev, p[x])
 				if prev[2] > p[x][1]:
 					## previous period ended after current period starts; overlap
 					raise GenerationError("%s overlaps with %s"%(prev[0], p[x][0]))

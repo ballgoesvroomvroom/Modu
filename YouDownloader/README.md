@@ -53,6 +53,7 @@ If non-existent, it would not write the output into any file, just the terminal/
 ```
 DB_ACCESS_TOKEN = qWyqlsanfdns_EASDFnkkadsf-sadhfjh
 BIN_PATH = bin
+OUTPUT_FILE = folderA/output.txt
 ```
 ###### Of course, that isn't my actual token, just keyboard smashing.
 
