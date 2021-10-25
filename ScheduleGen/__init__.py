@@ -175,6 +175,7 @@ class Schedule():
 		curr_period = None ## put the current period trying to slot in here
 		curr_period_len = 0
 		push = False ## push current period into schedule
+		# print(time_per_period)
 		while curr_timepointer <= self.end:
 			occupied = False
 			occupied_index = 0
@@ -184,7 +185,7 @@ class Schedule():
 					occupied = True
 					break
 				occupied_index += 1
-			print(curr_timepointer, occupied, curr_period, curr_period_len, push)
+			# print(curr_timepointer, occupied, curr_period, curr_period_len, push)
 			if (occupied and curr_period != None) or push:
 				## push current period instance into self.periods
 				start = curr_timepointer -curr_period_len
@@ -225,7 +226,7 @@ class Schedule():
 				random_stoplimit = random.randint(params.Periods[curr_period][1], params.Periods[curr_period][2]) ## bottom and upper bounds
 				# random_stoplimit_a = (random_stoplimit // 5) * 5
 				# print(random_stoplimit, random_stoplimit_a)
-				if curr_period_len >= random_stoplimit or curr_period_len > time_per_period[curr_period] or curr_timepointer == self.end:
+				if curr_period_len > time_per_period[curr_period] or curr_period_len >= random_stoplimit or curr_timepointer == self.end:
 					push = True
 				else:
 					pass
@@ -256,7 +257,6 @@ class Schedule():
 		self.__merge()
 		self.__convert()
 		self.write_json("output.json")
-		print(time_per_period)
 
 	def __repr__(self):
 		start_time = self.GetElapsedTimeSinceStartFromMinutes(self.start)
@@ -341,7 +341,6 @@ class Schedule():
 			if x > 0:
 				## check if periods overlap
 				prev = p[x -1]
-				print(prev, p[x])
 				if prev[2] > p[x][1]:
 					## previous period ended after current period starts; overlap
 					raise GenerationError("%s overlaps with %s"%(prev[0], p[x][0]))
