@@ -97,7 +97,7 @@ class Schedule():
 
 		self.g_start = utils.GetElapsedSinceZero(params.Start) ## minutes
 		self.start = 0 ## relative
-		self.end = self.GetElapsedSinceStart(params.End)
+		self.end = self.__GetElapsedSinceStart(params.End)
 		if params.Seed == -1:
 			self.seed = random.randint(1, 1000)/1000
 		else:
@@ -125,8 +125,8 @@ class Schedule():
 			if len(data) % 2 != 0:
 				raise GenerationError("SetInPlace for period: %s, does not contain enough start and end points"%(setted_per))
 			for i in range(0, len(data), 2):
-				start = self.GetElapsedSinceStart(data[i])
-				end = self.GetElapsedSinceStart(data[i +1])
+				start = self.__GetElapsedSinceStart(data[i])
+				end = self.__GetElapsedSinceStart(data[i +1])
 				if start > end:
 					raise GenerationError("SetInPlace for period: %s, does not contain a valid start and end group, with start > end"%(setted_per))
 				remaining_dur -= (end -start)
@@ -223,10 +223,11 @@ class Schedule():
 			elif not occupied and curr_period != None:
 				curr_period_len += 1
 
-				random_stoplimit = random.randint(params.Periods[curr_period][1], params.Periods[curr_period][2]) ## bottom and upper bounds
+				time_limit = params.Periods[curr_period] ## index 1 and 2
+				random_stoplimit = random.randint(time_limit[1], time_limit[2]) ## bottom and upper bounds
 				# random_stoplimit_a = (random_stoplimit // 5) * 5
 				# print(random_stoplimit, random_stoplimit_a)
-				if curr_period_len > time_per_period[curr_period] or curr_period_len >= random_stoplimit or curr_timepointer == self.end:
+				if curr_period_len > time_per_period[curr_period] or curr_period_len > time_limit[2] or curr_period_len >= random_stoplimit or curr_timepointer == self.end:
 					push = True
 				else:
 					pass
@@ -256,11 +257,11 @@ class Schedule():
 		self.__sort() ## redundant as it should have been sorted
 		self.__merge()
 		self.__convert()
-		self.write_json("output.json")
+		##self.write_json("output.json")
 
 	def __repr__(self):
-		start_time = self.GetElapsedTimeSinceStartFromMinutes(self.start)
-		end_time = self.GetElapsedTimeSinceStartFromMinutes(self.end)
+		start_time = self.__GetElapsedTimeSinceStartFromMinutes(self.start)
+		end_time = self.__GetElapsedTimeSinceStartFromMinutes(self.end)
 		r = " {} - {} {:>17}".format(start_time, end_time, "Seed: " +str(self.seed))
 		for period in self.periods:
 			name = period[0]
@@ -288,14 +289,14 @@ class Schedule():
 		with open(filename, "w") as f:
 			f.write(repr(self))
 
-	def GetElapsedSinceStart(self, s: str):
+	def __GetElapsedSinceStart(self, s: str):
 		"""
 		Gets the elapsed time (in minutes) since self.g_start
 		"""
 		## s = 08:10
 		global_elapsed = utils.GetElapsedSinceZero(s)
 		return global_elapsed -self.g_start ## global start, self.start is in relative mode, hence it is zero and is useless
-	def GetElapsedTimeSinceStartFromMinutes(self, s: str):
+	def __GetElapsedTimeSinceStartFromMinutes(self, s: str):
 		"""
 		Gets the elapsed time (in hh:mm format) since self.g_start
 		"""
@@ -324,7 +325,7 @@ class Schedule():
 		"""
 		for c, period in enumerate(self.periods):
 			for i in range(1, 3):
-				self.periods[c][i] = self.GetElapsedTimeSinceStartFromMinutes(self.periods[c][i])
+				self.periods[c][i] = self.__GetElapsedTimeSinceStartFromMinutes(self.periods[c][i])
 	def __sort(self):
 		"""
 		Sorts self.periods; start and end
