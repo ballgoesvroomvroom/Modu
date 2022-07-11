@@ -17,14 +17,14 @@ When prompted on what type of access is needed, `App folder` is sufficient.<br /
 Give it a name and create.<br />
 Over on permissions, enable the scopes needed.<br />
 A list of scopes needed:
-	- `files.metadata.write`
-	- `files.metadata.read`
-	- `file.content.write`
-	- `file.content.read`
-	- `sharing.write`
-	- `sharing.read`
-	- `file_requests.write`
-	- `file_requests.read`
+ - `files.metadata.write`
+ - `files.metadata.read`
+ - `file.content.write`
+ - `file.content.read`
+ - `sharing.write`
+ - `sharing.read`
+ - `file_requests.write`
+ - `file_requests.read`
 
 Create a `.env` file into the working directory and have the two variables.
 	- `DB_ACCESS_TOKEN`; your own personal access token from the newly created app
