@@ -27,7 +27,3 @@ def cinput(s = ""):
 def setInputPath(file_path):
 	if not const.INIT: const.INIT = True
 	const.FILE_NAME = file_path
-
-# setInputPath("youdownloaderinput.txt")
-# for i in range(1, 25):
-# 	cinput("Hello: ")

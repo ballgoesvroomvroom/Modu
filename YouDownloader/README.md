@@ -11,7 +11,7 @@ pytubeX - https://pypi.org/project/pytubeX/
 MoviePy - https://pypi.org/project/moviepy/  
 Pyperclip - https://pypi.org/project/pyperclip/  
 
-## How to use:
+## How to use [step by step guide]:
 You would need to create an app within [Dropbox API](https://www.dropbox.com/developers/apps/create).<br />
 When prompted on what type of access is needed, `App folder` is sufficient.<br />
 Give it a name and create.<br />
@@ -49,13 +49,13 @@ The contents are removed from that directory after successful uploads to Dropbox
 The path to a text file where the output (the shareable link) will be written in.<br />
 If non-existent, it would not write the output into any file, just the terminal/console.
 
-### Example of the said `.env` file
+### Example of the `.env` file
 ```
 DB_ACCESS_TOKEN = qWyqlsanfdns_EASDFnkkadsf-sadhfjh
 BIN_PATH = bin
 OUTPUT_FILE = folderA/output.txt
 ```
-###### Of course, that isn't my actual token, just keyboard smashing.
+###### Not my actual token, just keyboard smashing.
 
 ## Note:
 Giving the file a substitute name upon uploading and renaming it to its actual name afterwards is not needed whatsoever, remove it at your own will. :)
